@@ -23,21 +23,46 @@ library(tidyverse)
 library(ggplot2)
 ```
 
-# Introduction section
+# Introduction 
 Marketing expenditure plays a crucial role in influencing customer purchasing behaviour in online retail channels. It is important for businesses to understand whether increasing marketing investment leads to significant improvements in sales performance. Efficient allocation of marketing resources is essitial for maximise return on investment, supporting successful product launches, and sustaining long-term business growth. Therefore, this report investigates the relationship between marketing spending and customer purchase amount using campaign data.
 
-# Research Question section
+# Research Question 
 The report aims to investigate whether higher marketing expenditure per customer leads to increased purchase amounts in an online retail channel during the campaign period. The analysis focuses on identifying the relationship between marketing investment and customer purchasing behaviour across different customer segments, including enterprise, small and medium-sized businesses (SMBs), and consumers. The findings will help determine whether increasing marketing expenditure for personalised marketing campaigns is an effective strategy for improving revenue performance and support more efficient budget allocation.
 
-# Dataset Introduction section
+# Dataset Introduction 
 
+
+The `singup_date` variable was converted from character to date format using `parse_date_time()` function across the dataset. One additional missing value was detected. The `is.na()` function was used to inspect missing values and compare the raw and cleaned datasets. As a result, the new missing value was identified in row 145, where the original value was recorded as the character "N/A". This  indicates that the value represented a missing value but was previously stored as text.
 
 ```{r}
-mkt_campaign <- read_csv("data/36851256_Waranya Ratirotjanakul.csv")
+# load dataset
+mkt_campaign_raw <- read_csv("data/36851256_Waranya Ratirotjanakul.csv")
+
+# inspect dataset
+glimpse(mkt_campaign_raw)
+
+# convert chr to date format
+mkt_campaign_clean <- mkt_campaign_raw |>
+    mutate(signup_date = parse_date_time(signup_date,
+    orders = c("ymd", "dmy", "mdy")
+    ))
+
+# check missing value
+mkt_campaign_clean |>
+  filter(is.na(signup_date))
+mkt_campaign_raw |>
+  filter(is.na(signup_date))
 ```
 
-# Dataset Description section
 
-## Report detail
+# Dataset Description
 
-# Results section
+## Data detail
+The marketing campaign dataset contains `r nrow(mkt_campaign_clean)` observations and `r ncol(mkt_campaign_clean)` variables. The dataset includes both numberic and categorical variables. Numeric variables include `marketing_spnd` and `purchase_amount`,, while categoric variables include customer `segment`.
+
+## Summary table
+
+
+# Results 
+
+

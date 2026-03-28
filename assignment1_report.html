@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Waranya Ratirotjanakul (36851256)">
-<meta name="dcterms.date" content="2026-03-28">
+<meta name="dcterms.date" content="2026-03-29">
 
 <title>Marketing Campaign Analysis</title>
 <style>
@@ -86,14 +86,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction-section" id="toc-introduction-section" class="nav-link active" data-scroll-target="#introduction-section">Introduction section</a></li>
-  <li><a href="#research-question-section" id="toc-research-question-section" class="nav-link" data-scroll-target="#research-question-section">Research Question section</a></li>
-  <li><a href="#dataset-introduction-section" id="toc-dataset-introduction-section" class="nav-link" data-scroll-target="#dataset-introduction-section">Dataset Introduction section</a></li>
-  <li><a href="#dataset-description-section" id="toc-dataset-description-section" class="nav-link" data-scroll-target="#dataset-description-section">Dataset Description section</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#research-question" id="toc-research-question" class="nav-link" data-scroll-target="#research-question">Research Question</a></li>
+  <li><a href="#dataset-introduction" id="toc-dataset-introduction" class="nav-link" data-scroll-target="#dataset-introduction">Dataset Introduction</a></li>
+  <li><a href="#dataset-description" id="toc-dataset-description" class="nav-link" data-scroll-target="#dataset-description">Dataset Description</a>
   <ul class="collapse">
-  <li><a href="#report-detail" id="toc-report-detail" class="nav-link" data-scroll-target="#report-detail">Report detail</a></li>
+  <li><a href="#data-detail" id="toc-data-detail" class="nav-link" data-scroll-target="#data-detail">Data detail</a></li>
+  <li><a href="#summary-table" id="toc-summary-table" class="nav-link" data-scroll-target="#summary-table">Summary table</a></li>
   </ul></li>
-  <li><a href="#results-section" id="toc-results-section" class="nav-link" data-scroll-target="#results-section">Results section</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="assignment1_report.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
 </div>
@@ -118,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 28, 2026</p>
+      <p class="date">March 29, 2026</p>
     </div>
   </div>
   
@@ -130,18 +131,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introduction-section" class="level1">
-<h1>Introduction section</h1>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
 <p>Marketing expenditure plays a crucial role in influencing customer purchasing behaviour in online retail channels. It is important for businesses to understand whether increasing marketing investment leads to significant improvements in sales performance. Efficient allocation of marketing resources is essitial for maximise return on investment, supporting successful product launches, and sustaining long-term business growth. Therefore, this report investigates the relationship between marketing spending and customer purchase amount using campaign data.</p>
 </section>
-<section id="research-question-section" class="level1">
-<h1>Research Question section</h1>
+<section id="research-question" class="level1">
+<h1>Research Question</h1>
 <p>The report aims to investigate whether higher marketing expenditure per customer leads to increased purchase amounts in an online retail channel during the campaign period. The analysis focuses on identifying the relationship between marketing investment and customer purchasing behaviour across different customer segments, including enterprise, small and medium-sized businesses (SMBs), and consumers. The findings will help determine whether increasing marketing expenditure for personalised marketing campaigns is an effective strategy for improving revenue performance and support more efficient budget allocation.</p>
 </section>
-<section id="dataset-introduction-section" class="level1">
-<h1>Dataset Introduction section</h1>
+<section id="dataset-introduction" class="level1">
+<h1>Dataset Introduction</h1>
+<p>The <code>singup_date</code> variable was converted from character to date format using <code>parse_date_time()</code> function across the dataset. One additional missing value was detected. The <code>is.na()</code> function was used to inspect missing values and compare the raw and cleaned datasets. As a result, the new missing value was identified in row 145, where the original value was recorded as the character “N/A”. This indicates that the value represented a missing value but was previously stored as text.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mkt_campaign <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/36851256_Waranya Ratirotjanakul.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load dataset</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mkt_campaign_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/36851256_Waranya Ratirotjanakul.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 150 Columns: 7
 ── Column specification ────────────────────────────────────────────────────────
@@ -152,16 +155,191 @@ dbl (3): marketing_spend, visits, purchase_amount
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect dataset</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(mkt_campaign_raw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 150
+Columns: 7
+$ customer_id     &lt;chr&gt; "36851256_c0001", "36851256_c0002", "36851256_c0003", …
+$ signup_date     &lt;chr&gt; "Mar 16, 2025", "2025-02-20", "30/01/2025", "2025-09-2…
+$ marketing_spend &lt;dbl&gt; 213.34, 259.78, 95.26, 9.17, 106.80, 181.11, 249.70, 3…
+$ visits          &lt;dbl&gt; 7, 10, 2, 2, 4, 6, 10, 2, 7, 10, 7, 8, 4, 3, 8, 1, 9, …
+$ purchase_amount &lt;dbl&gt; 204.74, 263.84, 107.68, 58.12, 71.78, 172.77, 219.18, …
+$ segment         &lt;chr&gt; "SMB", "Consumer", "Consumer", "Consumer", "Consumer",…
+$ notes           &lt;chr&gt; NA, NA, NA, "contacted", NA, NA, "N/A", NA, NA, NA, NA…</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># convert chr to date format</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mkt_campaign_clean <span class="ot">&lt;-</span> mkt_campaign_raw <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">signup_date =</span> <span class="fu">parse_date_time</span>(signup_date,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">orders =</span> <span class="fu">c</span>(<span class="st">"ymd"</span>, <span class="st">"dmy"</span>, <span class="st">"mdy"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There was 1 warning in `mutate()`.
+ℹ In argument: `signup_date = parse_date_time(signup_date, orders = c("ymd",
+  "dmy", "mdy"))`.
+Caused by warning:
+!  1 failed to parse.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check missing value</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mkt_campaign_clean <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(signup_date))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 7
+  customer_id signup_date marketing_spend visits purchase_amount segment   
+  &lt;chr&gt;       &lt;dttm&gt;                &lt;dbl&gt;  &lt;dbl&gt;           &lt;dbl&gt; &lt;chr&gt;     
+1 36851256_c… NA                     64.6      8            76.1 Consumer  
+2 36851256_c… NA                     63.5      4           140.  Consumer  
+3 36851256_c… NA                    203.      11           161.  Consumer  
+4 36851256_c… NA                    163.       3           109.  Consumer  
+5 36851256_c… NA                     66.2      3            94.7 Enterprise
+6 36851256_c… NA                    147.       8           145.  Enterprise
+7 36851256_c… NA                     79.4      5           182.  Consumer  
+8 36851256_c… NA                    182.       8           158.  Consumer  
+9 36851256_c… NA                    136.       5            41.2 Consumer  
+# ℹ 1 more variable: notes &lt;chr&gt;</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mkt_campaign_raw <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(signup_date))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 7
+  customer_id   signup_date marketing_spend visits purchase_amount segment notes
+  &lt;chr&gt;         &lt;chr&gt;                 &lt;dbl&gt;  &lt;dbl&gt;           &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;
+1 36851256_c00… &lt;NA&gt;                   64.6      8            76.1 Consum… &lt;NA&gt; 
+2 36851256_c00… &lt;NA&gt;                   63.5      4           140.  Consum… retu…
+3 36851256_c00… &lt;NA&gt;                  203.      11           161.  Consum… N/A  
+4 36851256_c00… &lt;NA&gt;                  163.       3           109.  Consum… &lt;NA&gt; 
+5 36851256_c01… &lt;NA&gt;                   66.2      3            94.7 Enterp… cont…
+6 36851256_c01… &lt;NA&gt;                  147.       8           145.  Enterp… N/A  
+7 36851256_c01… &lt;NA&gt;                   79.4      5           182.  Consum… &lt;NA&gt; 
+8 36851256_c01… &lt;NA&gt;                  182.       8           158.  Consum… &lt;NA&gt; </code></pre>
+</div>
 </div>
 </section>
-<section id="dataset-description-section" class="level1">
-<h1>Dataset Description section</h1>
-<section id="report-detail" class="level2">
-<h2 class="anchored" data-anchor-id="report-detail">Report detail</h2>
+<section id="dataset-description" class="level1">
+<h1>Dataset Description</h1>
+<section id="data-detail" class="level2">
+<h2 class="anchored" data-anchor-id="data-detail">Data detail</h2>
+<p>The marketing campaign dataset contains 150 observations and 7 variables. The dataset includes both numberic and categorical variables. Numeric variables include <code>marketing_spnd</code> and <code>purchase_amount</code>,, while categoric variables include customer <code>segment</code>.</p>
+</section>
+<section id="summary-table" class="level2">
+<h2 class="anchored" data-anchor-id="summary-table">Summary table</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># group dataset by segment and summarise</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>segment_summary <span class="ot">&lt;-</span> mkt_campaign_clean <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(segment) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">avg_marketing_spend =</span> <span class="fu">mean</span>(marketing_spend, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">avg_visits =</span> <span class="fu">mean</span>(visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">avg_purchase_amount =</span> <span class="fu">mean</span>(purchase_amount, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">total_customers =</span> <span class="fu">n</span>()</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># display the table</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>segment_summary <span class="sc">|&gt;</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Figure1: Summary of Marketing Spend, Visits, and Purchase Amount by Customer Segment"</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Figure1: Summary of Marketing Spend, Visits, and Purchase Amount by Customer Segment</caption>
+<colgroup>
+<col style="width: 14%">
+<col style="width: 25%">
+<col style="width: 14%">
+<col style="width: 25%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">segment</th>
+<th style="text-align: right;">avg_marketing_spend</th>
+<th style="text-align: right;">avg_visits</th>
+<th style="text-align: right;">avg_purchase_amount</th>
+<th style="text-align: right;">total_customers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Consumer</td>
+<td style="text-align: right;">150.7118</td>
+<td style="text-align: right;">5.459184</td>
+<td style="text-align: right;">169.8379</td>
+<td style="text-align: right;">98</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Enterprise</td>
+<td style="text-align: right;">153.5454</td>
+<td style="text-align: right;">5.000000</td>
+<td style="text-align: right;">140.9462</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SMB</td>
+<td style="text-align: right;">140.5595</td>
+<td style="text-align: right;">5.230769</td>
+<td style="text-align: right;">122.5049</td>
+<td style="text-align: right;">39</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a summary plot marketing spend vs purchase amount</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mkt_campaign_clean,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> marketing_spend,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> purchase_amount)) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Relationship Between Marketing Spend and Purchase Amount"</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Marketing Spend"</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Purchase Amount"</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 18 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 18 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment1_report_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a summary plot</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mkt_campaign_clean,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> segment,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> purchase_amount)) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of Purchase Amount by Customer Segment"</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Customer Segment"</span>,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Purchase Amount"</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 18 rows containing non-finite outside the scale range
+(`stat_boxplot()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment1_report_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
-<section id="results-section" class="level1">
-<h1>Results section</h1>
+<section id="results" class="level1">
+<h1>Results</h1>
 </section>
 
 </main>
