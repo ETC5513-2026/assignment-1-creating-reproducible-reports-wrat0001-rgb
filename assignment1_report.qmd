@@ -1,0 +1,8 @@
+---
+title: "Marketing Campaign Analysis"
+author: "Waranya Ratirotjanakul (36851256)"
+format: 
+    html
+    pdf
+---
+
