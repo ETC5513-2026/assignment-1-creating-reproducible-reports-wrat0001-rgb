@@ -1,10 +1,13 @@
 ---
 title: "Marketing Campaign Analysis"
 author: "Waranya Ratirotjanakul (36851256)"
+date: today
 format: 
     html: 
+        theme: cosmo
         toc: true
     pdf: 
+        documentclass: article
         toc: true
 ---
 
@@ -21,10 +24,17 @@ library(ggplot2)
 ```
 
 # Introduction section
+Marketing expenditure plays a crucial role in influencing customer purchasing behaviour in online retail channels. It is important for businesses to understand whether increasing marketing investment leads to significant improvements in sales performance. Efficient allocation of marketing resources is essitial for maximise return on investment, supporting successful product launches, and sustaining long-term business growth. Therefore, this report investigates the relationship between marketing spending and customer purchase amount using campaign data.
 
 # Research Question section
+The report aims to investigate whether higher marketing expenditure per customer leads to increased purchase amounts in an online retail channel during the campaign period. The analysis focuses on identifying the relationship between marketing investment and customer purchasing behaviour across different customer segments, including enterprise, small and medium-sized businesses (SMBs), and consumers. The findings will help determine whether increasing marketing expenditure for personalised marketing campaigns is an effective strategy for improving revenue performance and support more efficient budget allocation.
 
 # Dataset Introduction section
+
+
+```{r}
+mkt_campaign <- read_csv("data/36851256_Waranya Ratirotjanakul.csv")
+```
 
 # Dataset Description section
 

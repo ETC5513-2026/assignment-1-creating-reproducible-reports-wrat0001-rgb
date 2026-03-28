@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Waranya Ratirotjanakul (36851256)">
+<meta name="dcterms.date" content="2026-03-28">
 
 <title>Marketing Campaign Analysis</title>
 <style>
@@ -24,6 +25,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -37,7 +73,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="assignment1_report_files/libs/quarto-html/quarto-syntax-highlighting-7c69b197886ae2a34062761d21e44731.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="assignment1_report_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="assignment1_report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="assignment1_report_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="assignment1_report_files/libs/bootstrap/bootstrap-8ffd5f67044e5306d9846f29df41dda5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -57,6 +93,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#report-detail" id="toc-report-detail" class="nav-link" data-scroll-target="#report-detail">Report detail</a></li>
   </ul></li>
+  <li><a href="#results-section" id="toc-results-section" class="nav-link" data-scroll-target="#results-section">Results section</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="assignment1_report.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
 </div>
@@ -78,6 +115,12 @@ ul.task-list li input[type="checkbox"] {
           </div>
   </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 28, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -89,18 +132,36 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction-section" class="level1">
 <h1>Introduction section</h1>
+<p>Marketing expenditure plays a crucial role in influencing customer purchasing behaviour in online retail channels. It is important for businesses to understand whether increasing marketing investment leads to significant improvements in sales performance. Efficient allocation of marketing resources is essitial for maximise return on investment, supporting successful product launches, and sustaining long-term business growth. Therefore, this report investigates the relationship between marketing spending and customer purchase amount using campaign data.</p>
 </section>
 <section id="research-question-section" class="level1">
 <h1>Research Question section</h1>
+<p>The report aims to investigate whether higher marketing expenditure per customer leads to increased purchase amounts in an online retail channel during the campaign period. The analysis focuses on identifying the relationship between marketing investment and customer purchasing behaviour across different customer segments, including enterprise, small and medium-sized businesses (SMBs), and consumers. The findings will help determine whether increasing marketing expenditure for personalised marketing campaigns is an effective strategy for improving revenue performance and support more efficient budget allocation.</p>
 </section>
 <section id="dataset-introduction-section" class="level1">
 <h1>Dataset Introduction section</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mkt_campaign <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/36851256_Waranya Ratirotjanakul.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 150 Columns: 7
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (4): customer_id, signup_date, segment, notes
+dbl (3): marketing_spend, visits, purchase_amount
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
 </section>
 <section id="dataset-description-section" class="level1">
 <h1>Dataset Description section</h1>
 <section id="report-detail" class="level2">
 <h2 class="anchored" data-anchor-id="report-detail">Report detail</h2>
 </section>
+</section>
+<section id="results-section" class="level1">
+<h1>Results section</h1>
 </section>
 
 </main>
