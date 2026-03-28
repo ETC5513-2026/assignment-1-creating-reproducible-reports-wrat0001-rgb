@@ -2,7 +2,32 @@
 title: "Marketing Campaign Analysis"
 author: "Waranya Ratirotjanakul (36851256)"
 format: 
-    html
-    pdf
+    html: 
+        toc: true
+    pdf: 
+        toc: true
 ---
 
+```{r setup}
+#| echo: false
+#| warning: false
+#| message: false
+
+# load in all the used library
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+library(ggplot2)
+```
+
+# Introduction section
+
+# Research Question section
+
+# Dataset Introduction section
+
+# Dataset Description section
+
+## Report detail
+
+# Results section
