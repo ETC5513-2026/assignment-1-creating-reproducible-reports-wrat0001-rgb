@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Waranya Ratirotjanakul (36851256)">
-<meta name="dcterms.date" content="2026-03-29">
+<meta name="dcterms.date" content="2026-03-30">
 
 <title>Marketing Campaign Analysis</title>
 <style>
@@ -92,7 +92,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#dataset-description" id="toc-dataset-description" class="nav-link" data-scroll-target="#dataset-description">Dataset Description</a>
   <ul class="collapse">
   <li><a href="#data-detail" id="toc-data-detail" class="nav-link" data-scroll-target="#data-detail">Data detail</a></li>
-  <li><a href="#summary-table" id="toc-summary-table" class="nav-link" data-scroll-target="#summary-table">Summary table</a></li>
+  <li><a href="#data-summary" id="toc-data-summary" class="nav-link" data-scroll-target="#data-summary">Data summary</a></li>
   </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
   </ul>
@@ -119,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 29, 2026</p>
+      <p class="date">March 30, 2026</p>
     </div>
   </div>
   
@@ -141,7 +141,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="dataset-introduction" class="level1">
 <h1>Dataset Introduction</h1>
-<p>The <code>singup_date</code> variable was converted from character to date format using <code>parse_date_time()</code> function across the dataset. One additional missing value was detected. The <code>is.na()</code> function was used to inspect missing values and compare the raw and cleaned datasets. As a result, the new missing value was identified in row 145, where the original value was recorded as the character “N/A”. This indicates that the value represented a missing value but was previously stored as text.</p>
+<p>The marketing campaign dataset records customer interactions and purchasing behaviour during an online retail campaign. The dataset includes information on customer ID, customer registration date, marketing spending, number of visits, purchase amount, customer segment classification, and notes describing customer contact status (e.g., no response, contacted, and returned). Before analysis, the dataset was cleaned to ensure data accuracy and consistency. The <code>signup_date</code> variable was converted from character format to date-time format using <code>parse_date_time()</code> function to standardize date representation across the dataset. Missing values were inspected and verified to ensure data quality prior to analysis.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load dataset</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mkt_campaign_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/36851256_Waranya Ratirotjanakul.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -168,7 +168,7 @@ $ purchase_amount &lt;dbl&gt; 204.74, 263.84, 107.68, 58.12, 71.78, 172.77, 219.
 $ segment         &lt;chr&gt; "SMB", "Consumer", "Consumer", "Consumer", "Consumer",…
 $ notes           &lt;chr&gt; NA, NA, NA, "contacted", NA, NA, "N/A", NA, NA, NA, NA…</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># convert chr to date format</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># convert character to date-time format</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mkt_campaign_clean <span class="ot">&lt;-</span> mkt_campaign_raw <span class="sc">|&gt;</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">signup_date =</span> <span class="fu">parse_date_time</span>(signup_date,</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">orders =</span> <span class="fu">c</span>(<span class="st">"ymd"</span>, <span class="st">"dmy"</span>, <span class="st">"mdy"</span>)</span>
@@ -180,9 +180,21 @@ $ notes           &lt;chr&gt; NA, NA, NA, "contacted", NA, NA, "N/A", NA, NA, NA
 Caused by warning:
 !  1 failed to parse.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check missing value</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mkt_campaign_clean <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(signup_date))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(mkt_campaign_clean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 150
+Columns: 7
+$ customer_id     &lt;chr&gt; "36851256_c0001", "36851256_c0002", "36851256_c0003", …
+$ signup_date     &lt;dttm&gt; 2025-03-16, 2025-02-20, 2025-01-30, 2025-09-24, 2025-…
+$ marketing_spend &lt;dbl&gt; 213.34, 259.78, 95.26, 9.17, 106.80, 181.11, 249.70, 3…
+$ visits          &lt;dbl&gt; 7, 10, 2, 2, 4, 6, 10, 2, 7, 10, 7, 8, 4, 3, 8, 1, 9, …
+$ purchase_amount &lt;dbl&gt; 204.74, 263.84, 107.68, 58.12, 71.78, 172.77, 219.18, …
+$ segment         &lt;chr&gt; "SMB", "Consumer", "Consumer", "Consumer", "Consumer",…
+$ notes           &lt;chr&gt; NA, NA, NA, "contacted", NA, NA, "N/A", NA, NA, NA, NA…</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check missing value</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>mkt_campaign_clean <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(signup_date))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 9 × 7
   customer_id signup_date marketing_spend visits purchase_amount segment   
@@ -198,8 +210,8 @@ Caused by warning:
 9 36851256_c… NA                    136.       5            41.2 Consumer  
 # ℹ 1 more variable: notes &lt;chr&gt;</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mkt_campaign_raw <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(signup_date))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mkt_campaign_raw <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(signup_date))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 7
   customer_id   signup_date marketing_spend visits purchase_amount segment notes
@@ -219,29 +231,90 @@ Caused by warning:
 <h1>Dataset Description</h1>
 <section id="data-detail" class="level2">
 <h2 class="anchored" data-anchor-id="data-detail">Data detail</h2>
-<p>The marketing campaign dataset contains 150 observations and 7 variables. The dataset includes both numberic and categorical variables. Numeric variables include <code>marketing_spnd</code> and <code>purchase_amount</code>,, while categoric variables include customer <code>segment</code>.</p>
+<p>The marketing campaign dataset contains 150 observations and 7 variables. The dataset includes numberic, categorical, character, and date-time variables. Numeric variables include <code>marketing_spend</code>, <code>visit</code>, and <code>purchase_amount</code>, while categoric variables includes customer <code>segment</code>. The variables <code>customer_id</code> and <code>notes</code> are stored as character data, and <code>signup_date</code> is recorded as a date-time variable.</p>
 </section>
-<section id="summary-table" class="level2">
-<h2 class="anchored" data-anchor-id="summary-table">Summary table</h2>
+<section id="data-summary" class="level2">
+<h2 class="anchored" data-anchor-id="data-summary">Data summary</h2>
+<p>The scatter plot shows a positive relationship between marketing spend and purchase amount, indicating that customers who receive higher marketing investment tend to generate higher purchase values. However, some variation is observed across customers, suggesting that additional factors may also influence purchasing behaviour.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># group dataset by segment and summarise</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>segment_summary <span class="ot">&lt;-</span> mkt_campaign_clean <span class="sc">|&gt;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(segment) <span class="sc">|&gt;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">avg_marketing_spend =</span> <span class="fu">mean</span>(marketing_spend, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">avg_visits =</span> <span class="fu">mean</span>(visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">avg_purchase_amount =</span> <span class="fu">mean</span>(purchase_amount, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">total_customers =</span> <span class="fu">n</span>()</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># display the table</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>segment_summary <span class="sc">|&gt;</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Figure1: Summary of Marketing Spend, Visits, and Purchase Amount by Customer Segment"</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a summary plot marketing spend vs purchase amount</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mkt_campaign_clean,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> marketing_spend,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> purchase_amount)) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Marketing Spend"</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Purchase Amount"</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 18 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 18 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assignment1_report_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Relationship Between Marketing Spend and Purchase Amount</figcaption>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run linear regression model</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>model_perf <span class="ot">&lt;-</span> <span class="fu">lm</span>(purchase_amount <span class="sc">~</span> marketing_spend,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> mkt_campaign_clean)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># evaluate model</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_perf)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = purchase_amount ~ marketing_spend, data = mkt_campaign_clean)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-129.031  -26.142   -8.535   22.801  119.639 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)     19.71804    8.08420   2.439   0.0161 *  
+marketing_spend  0.89560    0.04649  19.264   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 46.59 on 130 degrees of freedom
+  (18 observations deleted due to missingness)
+Multiple R-squared:  0.7406,    Adjusted R-squared:  0.7386 
+F-statistic: 371.1 on 1 and 130 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>The table shows differences in average purchasing behaviour across customer segments. Consumer customers have the highest average purchase amount, while SMB customers show relatively lower spending levels. These differences provide context for understanding how marketing performance may vary across customer groups.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary by segment</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>segment_summary <span class="ot">&lt;-</span> mkt_campaign_clean <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(segment) <span class="sc">|&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">avg_marketing_spend =</span> <span class="fu">round</span>(<span class="fu">mean</span>(marketing_spend, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>),</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">avg_visits =</span> <span class="fu">round</span>(<span class="fu">mean</span>(visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>),</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">avg_purchase_amount =</span> <span class="fu">round</span>(<span class="fu">mean</span>(purchase_amount, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>),</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">total_customers =</span> <span class="fu">n</span>()</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># display the table</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>segment_summary <span class="sc">|&gt;</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Table1: Summary of Marketing Spend, Visits, and Purchase Amount by Customer Segment"</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>Figure1: Summary of Marketing Spend, Visits, and Purchase Amount by Customer Segment</caption>
+<caption>Table1: Summary of Marketing Spend, Visits, and Purchase Amount by Customer Segment</caption>
 <colgroup>
 <col style="width: 14%">
 <col style="width: 25%">
@@ -261,69 +334,41 @@ Caused by warning:
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Consumer</td>
-<td style="text-align: right;">150.7118</td>
-<td style="text-align: right;">5.459184</td>
-<td style="text-align: right;">169.8379</td>
+<td style="text-align: right;">150.71</td>
+<td style="text-align: right;">5.46</td>
+<td style="text-align: right;">169.84</td>
 <td style="text-align: right;">98</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Enterprise</td>
-<td style="text-align: right;">153.5454</td>
-<td style="text-align: right;">5.000000</td>
-<td style="text-align: right;">140.9462</td>
+<td style="text-align: right;">153.55</td>
+<td style="text-align: right;">5.00</td>
+<td style="text-align: right;">140.95</td>
 <td style="text-align: right;">13</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">SMB</td>
-<td style="text-align: right;">140.5595</td>
-<td style="text-align: right;">5.230769</td>
-<td style="text-align: right;">122.5049</td>
+<td style="text-align: right;">140.56</td>
+<td style="text-align: right;">5.23</td>
+<td style="text-align: right;">122.50</td>
 <td style="text-align: right;">39</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a summary plot marketing spend vs purchase amount</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mkt_campaign_clean,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> marketing_spend,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> purchase_amount)) <span class="sc">+</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Relationship Between Marketing Spend and Purchase Amount"</span>,</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Marketing Spend"</span>,</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Purchase Amount"</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 18 rows containing non-finite outside the scale range
-(`stat_smooth()`).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 18 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="assignment1_report_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a summary plot</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mkt_campaign_clean,</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> segment,</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> purchase_amount)) <span class="sc">+</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of Purchase Amount by Customer Segment"</span>,</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Customer Segment"</span>,</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Purchase Amount"</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a summary plot</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mkt_campaign_clean,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> segment,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> purchase_amount)) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of Purchase Amount by Customer Segment"</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Customer Segment"</span>,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Purchase Amount"</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 18 rows containing non-finite outside the scale range
 (`stat_boxplot()`).</code></pre>
@@ -331,7 +376,7 @@ Caused by warning:
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="assignment1_report_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="assignment1_report_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -340,6 +385,7 @@ Caused by warning:
 </section>
 <section id="results" class="level1">
 <h1>Results</h1>
+<p>A simple linear regression model was used to examine the relationship between marketing spend and purchase amount. The results indicate a positive and statistically significant relationship between the two variables (β = 0.896, p &lt; 0.001). This suggests that higher marketing spending is associated with increased customer purchase amounts. The model explains approximately 74.1% of the variation in purchase amount (R² = 0.741), indicating a strong relationship between marketing investment and purchasing behaviour. A total of 18 observations were excluded from the analysis due to missing values in the dataset.</p>
 </section>
 
 </main>
