@@ -6,6 +6,7 @@ format:
     html: 
         theme: cosmo
         toc: true
+        smooth-scroll: true
     pdf: 
         documentclass: article
         toc: true
@@ -31,63 +32,42 @@ The report aims to investigate whether higher marketing expenditure per customer
 
 # Dataset Introduction 
 The marketing campaign dataset records customer interactions and purchasing behaviour during an online retail campaign. The dataset includes information on customer ID, customer registration date, marketing spending, number of visits, purchase amount, customer segment classification, and notes describing customer contact status (e.g., no response, contacted, and returned). 
-Before analysis, the dataset was cleaned to ensure data accuracy and consistency. The `signup_date` variable was converted from character format to date-time format using `parse_date_time()` function to standardize date representation across the dataset. Missing values were inspected and verified to ensure data quality prior to analysis.
+
+Before analysis, the dataset was cleaned to ensure data accuracy and consistency. Placeholder values such as "N/A" and blank entries were identified as representations of missing data and were converted into proper missing values to enable consistent handling of incomplete information. In addition, the `signup_date` variable was converted from character format to a standard date format to ensure consistent representation of customer registration dates across the dataset.
 
 ```{r}
-# load dataset
-mkt_campaign_raw <- read_csv("data/36851256_Waranya Ratirotjanakul.csv")
+#| echo: false
+#| warning: false
+#| message: false
 
-# inspect dataset
-glimpse(mkt_campaign_raw)
+# load dataset and autometically convert "N/A" to real NA across column
+mkt_campaign_raw <- read_csv("data/36851256_Waranya Ratirotjanakul.csv",
+na = c("N/A", ""))
 
-# convert character to date-time format
+# convert character to date format
 mkt_campaign_clean <- mkt_campaign_raw |>
     mutate(signup_date = parse_date_time(signup_date,
     orders = c("ymd", "dmy", "mdy")
-    ))
-glimpse(mkt_campaign_clean)
-
-# check missing value
-mkt_campaign_clean |>
-  filter(is.na(signup_date))
-mkt_campaign_raw |>
-  filter(is.na(signup_date))
+    ),
+    signup_date = as.Date(signup_date)
+    )
 ```
 
 # Dataset Description
 
 ## Data detail
-The marketing campaign dataset contains `r nrow(mkt_campaign_clean)` observations and `r ncol(mkt_campaign_clean)` variables. The dataset includes numberic, categorical, character, and date-time variables. Numeric variables include `marketing_spend`, `visit`, and `purchase_amount`, while categoric variables includes customer `segment`. The variables `customer_id` and `notes` are stored as character data, and `signup_date` is recorded as a date-time variable.
+The marketing campaign dataset contains `r nrow(mkt_campaign_clean)` observations and `r ncol(mkt_campaign_clean)` variables. The dataset includes numberic, categorical, character, and date-time variables. Numeric variables include `marketing_spend`, `visit`, and `purchase_amount`, while categoric variables includes customer `segment`. The variables `customer_id` and `notes` are stored as character data, and `signup_date` is recorded as a date variable.
 
 ## Data summary 
-The scatter plot shows a positive relationship between marketing spend and purchase amount, indicating that customers who receive higher marketing investment tend to generate higher purchase values. However, some variation is observed across customers, suggesting that additional factors may also influence purchasing behaviour.
+The summary statistics in @tbl-summarytable show differences in purchasing behaviour across segments in terms of marketing engagement and purchasing outcomes. Consumer customers represent the largest group (98 customers) and have the highest average purchase amount (169.84), indicating stronger overall spending compared with other segments. Enterprise customers show slightly higher average marketing spend (153.55) but a lower average purchase amount (140.95), suggesting that higher spending does not always translate directly into higher purchases. SMB customers have the lowest average purchase amount (122.50) despite moderate levels of marketing spend and visits.
 
 ```{r}
-#| fig-cap: "Relationship Between Marketing Spend and Purchase Amount"
+#| echo: false
+#| warning: false
+#| message: false
+#| label: tbl-summarytable
+#| tbl-cap: Summary of Marketing Spend, Visits, and Purchase Amount by Customer Segment
 
-# create a summary plot marketing spend vs purchase amount
-ggplot(mkt_campaign_clean,
-       aes(x = marketing_spend,
-           y = purchase_amount)) +
-  geom_point(alpha = 0.6) +
-  geom_smooth(method = "lm") +
-  labs(
-    x = "Marketing Spend",
-    y = "Purchase Amount"
-  ) +
-  theme_minimal()
-
-# run linear regression model
-model_perf <- lm(purchase_amount ~ marketing_spend,
-                data = mkt_campaign_clean)
-
-# evaluate model
-summary(model_perf)
-```
-
-The table shows differences in average purchasing behaviour across customer segments. Consumer customers have the highest average purchase amount, while SMB customers show relatively lower spending levels. These differences provide context for understanding how marketing performance may vary across customer groups.
-
-```{r}
 # summary by segment
 segment_summary <- mkt_campaign_clean |>
     group_by(segment) |>
@@ -100,26 +80,114 @@ segment_summary <- mkt_campaign_clean |>
 
 # display the table
 segment_summary |>
-    knitr::kable(
-        caption = "Table1: Summary of Marketing Spend, Visits, and Purchase Amount by Customer Segment"
-    )
+    knitr::kable()
 ```
 
+@fig-boxplot further illustrates the distribution of purchase amounts across customer segments. The boxplot shows that Consumer customers have both higher typical spending and greater variability in purchasing behaviour. Enterprise customers show a similar median purchase amount but a narrower spread, suggesting more consistent spending patterns within this segment. In contrast, SMB customers have a lower median purchase amount and a wider distribution, indicating greater variability and lower purchasing levels. These differences suggest that purchasing behaviour varies across customer segments and provide important context for evaluating marketing performance.
+
 ```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| label: fig-boxplot
+#| fig-cap: "Distribution of Purchase Amount by Customer Segment"
+
 # create a summary plot
 ggplot(mkt_campaign_clean,
        aes(x = segment,
-           y = purchase_amount)) +
+           y = purchase_amount,
+           fill = segment)) +
   geom_boxplot() +
   labs(
     title = "Distribution of Purchase Amount by Customer Segment",
     x = "Customer Segment",
     y = "Purchase Amount"
   ) +
-  theme_minimal()
+  theme_minimal() +
+  theme(legend.position = "none")
 ```
 
 # Results 
 
-A simple linear regression model was used to examine the relationship between marketing spend and purchase amount. The results indicate a positive and statistically significant relationship between the two variables (β = 0.896, p < 0.001). This suggests that higher marketing spending is associated with increased customer purchase amounts. The model explains approximately 74.1% of the variation in purchase amount (R² = 0.741), indicating a strong relationship between marketing investment and purchasing behaviour. A total of 18 observations were excluded from the analysis due to missing values in the dataset.
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| label: fig-spend
+#| fig-cap: "Relationship Between Marketing Spend and Purchase Amount"
 
+# create a scatter plot of marketing spend vs purchase amount
+ggplot(mkt_campaign_clean,
+       aes(x = marketing_spend,
+           y = purchase_amount,
+           colour = segment)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm",
+              color = "black",
+              se = TRUE) +
+  labs(
+    x = "Marketing Spend",
+    y = "Purchase Amount",
+    colour = "Customer Segment"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| results: false
+
+# run linear regression model
+model_perf <- lm(purchase_amount ~ marketing_spend,
+                data = mkt_campaign_clean)
+
+# evaluate model
+summary(model_perf)
+```
+
+@fig-spend shows a strong positive relationship between marketing spend and purchase amount, indicating that customers who receive higher marketing investment tend to generate higher purchase values. The model explains approximately `r round(summary(model_perf)$r.squared * 100, 1)`% of the variation in purchase amount, suggesting that marketing spending is an important factor influencing customer purchasing behaviour.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| label: fig-visit
+#| fig-cap: "Relationship Between Number of Visits and Purchase Amount"
+
+# create a scatter plot of visits vs purchase amount
+
+ggplot(mkt_campaign_clean,
+       aes(x = visits,
+           y = purchase_amount,
+           colour = segment)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm",
+              color = "black",
+              se = TRUE) +
+  labs(
+    x = "Number of Visits",
+    y = "Purchase Amount",
+    colour = "Customer Segment"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| results: false
+
+# run linear regression model
+model_visit <- lm(purchase_amount ~ visits,
+                data = mkt_campaign_clean)
+
+# evaluate model
+summary(model_visit)
+```
+
+@fig-visit shows that the number of visits is also positively related to purchase amount, meaning customers who visit more frequently tend to spend more. However, the relationship appears weaker, with the model explaining only about `r round(summary(model_visit)$r.squared * 100, 1)`% of the variation in purchase amount. This suggests that while customer engagement contributes to purchasing behaviour, marketing spending plays a stronger role in driving purchase outcomes.
+
+Although the results indicate a meaningful relationship between marketing spend and purchase amount, the scatter in the data shows that purchase amounts can still vary at similar levels of marketing spending. Therefore, collecting more campaign data in future periods would help improve the reliability of the analysis and support more confident evaluation of marketing effectiveness.

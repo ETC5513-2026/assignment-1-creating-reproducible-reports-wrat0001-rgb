@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Waranya Ratirotjanakul (36851256)">
-<meta name="dcterms.date" content="2026-03-30">
+<meta name="dcterms.date" content="2026-03-31">
 
 <title>Marketing Campaign Analysis</title>
 <style>
@@ -25,41 +25,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -74,6 +39,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="assignment1_report_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="assignment1_report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="assignment1_report_files/libs/bootstrap/bootstrap-8ffd5f67044e5306d9846f29df41dda5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<style>html{ scroll-behavior: smooth; }</style>
 
 
 </head>
@@ -119,7 +85,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 30, 2026</p>
+      <p class="date">March 31, 2026</p>
     </div>
   </div>
   
@@ -141,180 +107,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="dataset-introduction" class="level1">
 <h1>Dataset Introduction</h1>
-<p>The marketing campaign dataset records customer interactions and purchasing behaviour during an online retail campaign. The dataset includes information on customer ID, customer registration date, marketing spending, number of visits, purchase amount, customer segment classification, and notes describing customer contact status (e.g., no response, contacted, and returned). Before analysis, the dataset was cleaned to ensure data accuracy and consistency. The <code>signup_date</code> variable was converted from character format to date-time format using <code>parse_date_time()</code> function to standardize date representation across the dataset. Missing values were inspected and verified to ensure data quality prior to analysis.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load dataset</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mkt_campaign_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/36851256_Waranya Ratirotjanakul.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 150 Columns: 7
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (4): customer_id, signup_date, segment, notes
-dbl (3): marketing_spend, visits, purchase_amount
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect dataset</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(mkt_campaign_raw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 150
-Columns: 7
-$ customer_id     &lt;chr&gt; "36851256_c0001", "36851256_c0002", "36851256_c0003", …
-$ signup_date     &lt;chr&gt; "Mar 16, 2025", "2025-02-20", "30/01/2025", "2025-09-2…
-$ marketing_spend &lt;dbl&gt; 213.34, 259.78, 95.26, 9.17, 106.80, 181.11, 249.70, 3…
-$ visits          &lt;dbl&gt; 7, 10, 2, 2, 4, 6, 10, 2, 7, 10, 7, 8, 4, 3, 8, 1, 9, …
-$ purchase_amount &lt;dbl&gt; 204.74, 263.84, 107.68, 58.12, 71.78, 172.77, 219.18, …
-$ segment         &lt;chr&gt; "SMB", "Consumer", "Consumer", "Consumer", "Consumer",…
-$ notes           &lt;chr&gt; NA, NA, NA, "contacted", NA, NA, "N/A", NA, NA, NA, NA…</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># convert character to date-time format</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mkt_campaign_clean <span class="ot">&lt;-</span> mkt_campaign_raw <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">signup_date =</span> <span class="fu">parse_date_time</span>(signup_date,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">orders =</span> <span class="fu">c</span>(<span class="st">"ymd"</span>, <span class="st">"dmy"</span>, <span class="st">"mdy"</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: There was 1 warning in `mutate()`.
-ℹ In argument: `signup_date = parse_date_time(signup_date, orders = c("ymd",
-  "dmy", "mdy"))`.
-Caused by warning:
-!  1 failed to parse.</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(mkt_campaign_clean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 150
-Columns: 7
-$ customer_id     &lt;chr&gt; "36851256_c0001", "36851256_c0002", "36851256_c0003", …
-$ signup_date     &lt;dttm&gt; 2025-03-16, 2025-02-20, 2025-01-30, 2025-09-24, 2025-…
-$ marketing_spend &lt;dbl&gt; 213.34, 259.78, 95.26, 9.17, 106.80, 181.11, 249.70, 3…
-$ visits          &lt;dbl&gt; 7, 10, 2, 2, 4, 6, 10, 2, 7, 10, 7, 8, 4, 3, 8, 1, 9, …
-$ purchase_amount &lt;dbl&gt; 204.74, 263.84, 107.68, 58.12, 71.78, 172.77, 219.18, …
-$ segment         &lt;chr&gt; "SMB", "Consumer", "Consumer", "Consumer", "Consumer",…
-$ notes           &lt;chr&gt; NA, NA, NA, "contacted", NA, NA, "N/A", NA, NA, NA, NA…</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check missing value</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>mkt_campaign_clean <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(signup_date))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 9 × 7
-  customer_id signup_date marketing_spend visits purchase_amount segment   
-  &lt;chr&gt;       &lt;dttm&gt;                &lt;dbl&gt;  &lt;dbl&gt;           &lt;dbl&gt; &lt;chr&gt;     
-1 36851256_c… NA                     64.6      8            76.1 Consumer  
-2 36851256_c… NA                     63.5      4           140.  Consumer  
-3 36851256_c… NA                    203.      11           161.  Consumer  
-4 36851256_c… NA                    163.       3           109.  Consumer  
-5 36851256_c… NA                     66.2      3            94.7 Enterprise
-6 36851256_c… NA                    147.       8           145.  Enterprise
-7 36851256_c… NA                     79.4      5           182.  Consumer  
-8 36851256_c… NA                    182.       8           158.  Consumer  
-9 36851256_c… NA                    136.       5            41.2 Consumer  
-# ℹ 1 more variable: notes &lt;chr&gt;</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mkt_campaign_raw <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(signup_date))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 8 × 7
-  customer_id   signup_date marketing_spend visits purchase_amount segment notes
-  &lt;chr&gt;         &lt;chr&gt;                 &lt;dbl&gt;  &lt;dbl&gt;           &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;
-1 36851256_c00… &lt;NA&gt;                   64.6      8            76.1 Consum… &lt;NA&gt; 
-2 36851256_c00… &lt;NA&gt;                   63.5      4           140.  Consum… retu…
-3 36851256_c00… &lt;NA&gt;                  203.      11           161.  Consum… N/A  
-4 36851256_c00… &lt;NA&gt;                  163.       3           109.  Consum… &lt;NA&gt; 
-5 36851256_c01… &lt;NA&gt;                   66.2      3            94.7 Enterp… cont…
-6 36851256_c01… &lt;NA&gt;                  147.       8           145.  Enterp… N/A  
-7 36851256_c01… &lt;NA&gt;                   79.4      5           182.  Consum… &lt;NA&gt; 
-8 36851256_c01… &lt;NA&gt;                  182.       8           158.  Consum… &lt;NA&gt; </code></pre>
-</div>
-</div>
+<p>The marketing campaign dataset records customer interactions and purchasing behaviour during an online retail campaign. The dataset includes information on customer ID, customer registration date, marketing spending, number of visits, purchase amount, customer segment classification, and notes describing customer contact status (e.g., no response, contacted, and returned).</p>
+<p>Before analysis, the dataset was cleaned to ensure data accuracy and consistency. Placeholder values such as “N/A” and blank entries were identified as representations of missing data and were converted into proper missing values to enable consistent handling of incomplete information. In addition, the <code>signup_date</code> variable was converted from character format to a standard date format to ensure consistent representation of customer registration dates across the dataset.</p>
 </section>
 <section id="dataset-description" class="level1">
 <h1>Dataset Description</h1>
 <section id="data-detail" class="level2">
 <h2 class="anchored" data-anchor-id="data-detail">Data detail</h2>
-<p>The marketing campaign dataset contains 150 observations and 7 variables. The dataset includes numberic, categorical, character, and date-time variables. Numeric variables include <code>marketing_spend</code>, <code>visit</code>, and <code>purchase_amount</code>, while categoric variables includes customer <code>segment</code>. The variables <code>customer_id</code> and <code>notes</code> are stored as character data, and <code>signup_date</code> is recorded as a date-time variable.</p>
+<p>The marketing campaign dataset contains 150 observations and 7 variables. The dataset includes numberic, categorical, character, and date-time variables. Numeric variables include <code>marketing_spend</code>, <code>visit</code>, and <code>purchase_amount</code>, while categoric variables includes customer <code>segment</code>. The variables <code>customer_id</code> and <code>notes</code> are stored as character data, and <code>signup_date</code> is recorded as a date variable.</p>
 </section>
 <section id="data-summary" class="level2">
 <h2 class="anchored" data-anchor-id="data-summary">Data summary</h2>
-<p>The scatter plot shows a positive relationship between marketing spend and purchase amount, indicating that customers who receive higher marketing investment tend to generate higher purchase values. However, some variation is observed across customers, suggesting that additional factors may also influence purchasing behaviour.</p>
+<p>The summary statistics in <a href="#tbl-summarytable" class="quarto-xref">Table&nbsp;1</a> show differences in purchasing behaviour across segments in terms of marketing engagement and purchasing outcomes. Consumer customers represent the largest group (98 customers) and have the highest average purchase amount (169.84), indicating stronger overall spending compared with other segments. Enterprise customers show slightly higher average marketing spend (153.55) but a lower average purchase amount (140.95), suggesting that higher spending does not always translate directly into higher purchases. SMB customers have the lowest average purchase amount (122.50) despite moderate levels of marketing spend and visits.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a summary plot marketing spend vs purchase amount</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mkt_campaign_clean,</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> marketing_spend,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> purchase_amount)) <span class="sc">+</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Marketing Spend"</span>,</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Purchase Amount"</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 18 rows containing non-finite outside the scale range
-(`stat_smooth()`).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 18 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-</div>
+<div id="tbl-summarytable" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-summarytable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Summary of Marketing Spend, Visits, and Purchase Amount by Customer Segment
+</figcaption>
+<div aria-describedby="tbl-summarytable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="assignment1_report_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption>Relationship Between Marketing Spend and Purchase Amount</figcaption>
-</figure>
-</div>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run linear regression model</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>model_perf <span class="ot">&lt;-</span> <span class="fu">lm</span>(purchase_amount <span class="sc">~</span> marketing_spend,</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> mkt_campaign_clean)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># evaluate model</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_perf)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = purchase_amount ~ marketing_spend, data = mkt_campaign_clean)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--129.031  -26.142   -8.535   22.801  119.639 
-
-Coefficients:
-                Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)     19.71804    8.08420   2.439   0.0161 *  
-marketing_spend  0.89560    0.04649  19.264   &lt;2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 46.59 on 130 degrees of freedom
-  (18 observations deleted due to missingness)
-Multiple R-squared:  0.7406,    Adjusted R-squared:  0.7386 
-F-statistic: 371.1 on 1 and 130 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-<p>The table shows differences in average purchasing behaviour across customer segments. Consumer customers have the highest average purchase amount, while SMB customers show relatively lower spending levels. These differences provide context for understanding how marketing performance may vary across customer groups.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary by segment</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>segment_summary <span class="ot">&lt;-</span> mkt_campaign_clean <span class="sc">|&gt;</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(segment) <span class="sc">|&gt;</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">avg_marketing_spend =</span> <span class="fu">round</span>(<span class="fu">mean</span>(marketing_spend, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>),</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">avg_visits =</span> <span class="fu">round</span>(<span class="fu">mean</span>(visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>),</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">avg_purchase_amount =</span> <span class="fu">round</span>(<span class="fu">mean</span>(purchase_amount, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>),</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">total_customers =</span> <span class="fu">n</span>()</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># display the table</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>segment_summary <span class="sc">|&gt;</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Table1: Summary of Marketing Spend, Visits, and Purchase Amount by Customer Segment"</span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>Table1: Summary of Marketing Spend, Visits, and Purchase Amount by Customer Segment</caption>
+<table class="cell caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 14%">
 <col style="width: 25%">
@@ -357,26 +170,20 @@ F-statistic: 371.1 on 1 and 130 DF,  p-value: &lt; 2.2e-16</code></pre>
 </table>
 </div>
 </div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a summary plot</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mkt_campaign_clean,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> segment,</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> purchase_amount)) <span class="sc">+</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of Purchase Amount by Customer Segment"</span>,</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Customer Segment"</span>,</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Purchase Amount"</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 18 rows containing non-finite outside the scale range
-(`stat_boxplot()`).</code></pre>
+</figure>
 </div>
+</div>
+<p><a href="#fig-boxplot" class="quarto-xref">Figure&nbsp;1</a> further illustrates the distribution of purchase amounts across customer segments. The boxplot shows that Consumer customers have both higher typical spending and greater variability in purchasing behaviour. Enterprise customers show a similar median purchase amount but a narrower spread, suggesting more consistent spending patterns within this segment. In contrast, SMB customers have a lower median purchase amount and a wider distribution, indicating greater variability and lower purchasing levels. These differences suggest that purchasing behaviour varies across customer segments and provide important context for evaluating marketing performance.</p>
+<div class="cell">
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="assignment1_report_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-boxplot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assignment1_report_files/figure-html/fig-boxplot-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Distribution of Purchase Amount by Customer Segment
+</figcaption>
 </figure>
 </div>
 </div>
@@ -385,7 +192,37 @@ F-statistic: 371.1 on 1 and 130 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="results" class="level1">
 <h1>Results</h1>
-<p>A simple linear regression model was used to examine the relationship between marketing spend and purchase amount. The results indicate a positive and statistically significant relationship between the two variables (β = 0.896, p &lt; 0.001). This suggests that higher marketing spending is associated with increased customer purchase amounts. The model explains approximately 74.1% of the variation in purchase amount (R² = 0.741), indicating a strong relationship between marketing investment and purchasing behaviour. A total of 18 observations were excluded from the analysis due to missing values in the dataset.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-spend" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-spend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assignment1_report_files/figure-html/fig-spend-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Relationship Between Marketing Spend and Purchase Amount
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-spend" class="quarto-xref">Figure&nbsp;2</a> shows a strong positive relationship between marketing spend and purchase amount, indicating that customers who receive higher marketing investment tend to generate higher purchase values. The model explains approximately 74.1% of the variation in purchase amount, suggesting that marketing spending is an important factor influencing customer purchasing behaviour.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-visit" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-visit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assignment1_report_files/figure-html/fig-visit-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-visit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Relationship Between Number of Visits and Purchase Amount
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-visit" class="quarto-xref">Figure&nbsp;3</a> shows that the number of visits is also positively related to purchase amount, meaning customers who visit more frequently tend to spend more. However, the relationship appears weaker, with the model explaining only about 20.6% of the variation in purchase amount. This suggests that while customer engagement contributes to purchasing behaviour, marketing spending plays a stronger role in driving purchase outcomes.</p>
+<p>Although the results indicate a meaningful relationship between marketing spend and purchase amount, the scatter in the data shows that purchase amounts can still vary at similar levels of marketing spending. Therefore, collecting more campaign data in future periods would help improve the reliability of the analysis and support more confident evaluation of marketing effectiveness.</p>
 </section>
 
 </main>
@@ -795,4 +632,5 @@ F-statistic: 371.1 on 1 and 130 DF,  p-value: &lt; 2.2e-16</code></pre>
 
 
 
+<script src="assignment1_report_files/libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
