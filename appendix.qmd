@@ -2,7 +2,9 @@
 title: "Appendix for Assignment1"
 author: "Waranya Ratirotjanakul (36851256)"
 date: today
-format: html
+format: 
+    html:
+        theme: cosmo
 ---
 
 # AI Acknowledgement
