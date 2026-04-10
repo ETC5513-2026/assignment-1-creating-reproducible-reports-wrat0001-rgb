@@ -1,0 +1,26 @@
+---
+title: "Appendix for Assignment1"
+author: "Waranya Ratirotjanakul (36851256)"
+date: today
+format: html
+---
+
+# AI Acknowledgement
+I used generative artificial intelligence (AI) tools, specifically Copilot, to support my learning and improve efficiency during the completion of this assignment. The AI tools were used as supplementary resources for guidance, clarification, and troubleshooting, while all data processing, analysis decisions, and final outputs were completed and verified independently by me.
+
+Specifically, I used AI assistance to:
+
+* Convert mixed date formats into a consistent date format in R
+* Identify which rows failed to parse when using `parse_date_time()`
+* Convert `N/A` and other placeholder strings into proper `NA` values
+* Apply missing-value cleaning across multiple columns using `across()`
+* Resolve an error caused by mixing character and numeric columns in `na_if()`
+* Diagnose and fix the Quarto error object `model_perf` not found
+* Suggest how to center plot captions in Quarto and `ggplot2`
+* Configure R chunks to hide code output, warnings, and messages
+* Improve grammar and clarity of written paragraphs in the report
+* Refine interpretations of statistical results and visualisations
+
+All interpretations, data cleaning steps, analysis decisions, and final written content were reviewed, verified, and completed by me in accordance with the unit’s academic integrity requirements.
+
+A complete record of prompts used during this assignment is available at the following link: <https://copilot.microsoft.com/shares/6ea8vVqyypTHrMNf2Mf6i>
