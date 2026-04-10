@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Waranya Ratirotjanakul (36851256)">
-<meta name="dcterms.date" content="2026-03-31">
+<meta name="dcterms.date" content="2026-04-10">
 
 <title>Marketing Campaign Analysis</title>
 <style>
@@ -54,11 +54,10 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#research-question" id="toc-research-question" class="nav-link" data-scroll-target="#research-question">Research Question</a></li>
-  <li><a href="#dataset-introduction" id="toc-dataset-introduction" class="nav-link" data-scroll-target="#dataset-introduction">Dataset Introduction</a></li>
-  <li><a href="#dataset-description" id="toc-dataset-description" class="nav-link" data-scroll-target="#dataset-description">Dataset Description</a>
+  <li><a href="#dataset-introduction" id="toc-dataset-introduction" class="nav-link" data-scroll-target="#dataset-introduction">Dataset Introduction</a>
   <ul class="collapse">
-  <li><a href="#data-detail" id="toc-data-detail" class="nav-link" data-scroll-target="#data-detail">Data detail</a></li>
-  <li><a href="#data-summary" id="toc-data-summary" class="nav-link" data-scroll-target="#data-summary">Data summary</a></li>
+  <li><a href="#dataset-description" id="toc-dataset-description" class="nav-link" data-scroll-target="#dataset-description">Dataset Description</a></li>
+  <li><a href="#dataset-summary" id="toc-dataset-summary" class="nav-link" data-scroll-target="#dataset-summary">Dataset summary</a></li>
   </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
   </ul>
@@ -85,7 +84,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 31, 2026</p>
+      <p class="date">April 10, 2026</p>
     </div>
   </div>
   
@@ -99,26 +98,23 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>Marketing expenditure plays a crucial role in influencing customer purchasing behaviour in online retail channels. It is important for businesses to understand whether increasing marketing investment leads to significant improvements in sales performance. Efficient allocation of marketing resources is essitial for maximise return on investment, supporting successful product launches, and sustaining long-term business growth. Therefore, this report investigates the relationship between marketing spending and customer purchase amount using campaign data.</p>
+<p>Marketing expenditure plays a crucial role in influencing customer purchasing behaviour in online retail channels. Understanding whether increased marketing investment leads to improvements in sales performance is essential for effective business decision-making. Efficient allocation of marketing resources helps maximise return on investment, support successful product launches, and sustain long-term business growth. Therefore, this report investigates the relationship between marketing spending and customer purchase amount using campaign data.</p>
 </section>
 <section id="research-question" class="level1">
 <h1>Research Question</h1>
-<p>The report aims to investigate whether higher marketing expenditure per customer leads to increased purchase amounts in an online retail channel during the campaign period. The analysis focuses on identifying the relationship between marketing investment and customer purchasing behaviour across different customer segments, including enterprise, small and medium-sized businesses (SMBs), and consumers. The findings will help determine whether increasing marketing expenditure for personalised marketing campaigns is an effective strategy for improving revenue performance and support more efficient budget allocation.</p>
+<p>This report investigates whether higher marketing expenditure per customer leads to increased purchase amounts in an online retail channel during the campaign period. The analysis examines the relationship between marketing investment and customer purchasing behaviour across different customer segments, including enterprise, small and medium-sized businesses (SMBs), and consumers. The findings will help determine whether increasing marketing expenditure for personalised marketing campaigns is an effective strategy for improving revenue performance and supporting more efficient budget allocation.</p>
 </section>
 <section id="dataset-introduction" class="level1">
 <h1>Dataset Introduction</h1>
-<p>The marketing campaign dataset records customer interactions and purchasing behaviour during an online retail campaign. The dataset includes information on customer ID, customer registration date, marketing spending, number of visits, purchase amount, customer segment classification, and notes describing customer contact status (e.g., no response, contacted, and returned).</p>
-<p>Before analysis, the dataset was cleaned to ensure data accuracy and consistency. Placeholder values such as “N/A” and blank entries were identified as representations of missing data and were converted into proper missing values to enable consistent handling of incomplete information. In addition, the <code>signup_date</code> variable was converted from character format to a standard date format to ensure consistent representation of customer registration dates across the dataset.</p>
+<p>The marketing campaign dataset records customer interactions and purchasing behaviour during an online retail campaign. It includes information on customer ID, customer registration date, marketing spending, number of visits, purchase amount, customer segment classification, and notes describing customer contact status (e.g., no response, contacted, and returned). This data provides insight into customer engagement and purchasing outcomes associated with marketing activities.</p>
+<p>Before analysis, the dataset was cleaned to ensure data accuracy and consistency. Placeholder values such as “N/A” and blank entries were identified as representations of missing data and were converted into proper missing values to enable consistent handling of incomplete information. In addition, the <code>signup_date</code> variable was converted from character format into a standard date format to ensure consistent representation of customer registration dates across the dataset.</p>
+<section id="dataset-description" class="level2">
+<h2 class="anchored" data-anchor-id="dataset-description">Dataset Description</h2>
+<p>The marketing campaign dataset contains 150 observations and 7 variables. It includes numeric, categorical, character, and date variables representing customer behaviour and marketing activity. Numeric variables include <code>marketing_spend</code>, <code>visits</code>, and <code>purchase_amount</code>, while the categorical variable includes customer <code>segment</code>. The variables <code>customer_id</code> and <code>notes</code> are stored as character data, and <code>signup_date</code> is recorded as a date variable.</p>
 </section>
-<section id="dataset-description" class="level1">
-<h1>Dataset Description</h1>
-<section id="data-detail" class="level2">
-<h2 class="anchored" data-anchor-id="data-detail">Data detail</h2>
-<p>The marketing campaign dataset contains 150 observations and 7 variables. The dataset includes numberic, categorical, character, and date-time variables. Numeric variables include <code>marketing_spend</code>, <code>visit</code>, and <code>purchase_amount</code>, while categoric variables includes customer <code>segment</code>. The variables <code>customer_id</code> and <code>notes</code> are stored as character data, and <code>signup_date</code> is recorded as a date variable.</p>
-</section>
-<section id="data-summary" class="level2">
-<h2 class="anchored" data-anchor-id="data-summary">Data summary</h2>
-<p>The summary statistics in <a href="#tbl-summarytable" class="quarto-xref">Table&nbsp;1</a> show differences in purchasing behaviour across segments in terms of marketing engagement and purchasing outcomes. Consumer customers represent the largest group (98 customers) and have the highest average purchase amount (169.84), indicating stronger overall spending compared with other segments. Enterprise customers show slightly higher average marketing spend (153.55) but a lower average purchase amount (140.95), suggesting that higher spending does not always translate directly into higher purchases. SMB customers have the lowest average purchase amount (122.50) despite moderate levels of marketing spend and visits.</p>
+<section id="dataset-summary" class="level2">
+<h2 class="anchored" data-anchor-id="dataset-summary">Dataset summary</h2>
+<p>The summary statistics in <a href="#tbl-summarytable" class="quarto-xref">Table&nbsp;1</a> show differences in purchasing behaviour across segments in terms of marketing engagement and purchasing outcomes. Consumer customers represent the largest group (98 customers) and have the highest average purchase amount (169.84), indicating stronger overall spending compared with other segments. Enterprise customers show slightly higher average marketing spend (153.55) but a lower average purchase amount (140.95), suggesting that higher spending does not always translate into higher purchases. SMB customers have the lowest average purchase amount (122.50) despite moderate levels of marketing spend and visits, indicating relatively weaker purchasing behaviour within this segment.</p>
 <div class="cell">
 <div id="tbl-summarytable" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -173,7 +169,7 @@ Table&nbsp;1: Summary of Marketing Spend, Visits, and Purchase Amount by Custome
 </figure>
 </div>
 </div>
-<p><a href="#fig-boxplot" class="quarto-xref">Figure&nbsp;1</a> further illustrates the distribution of purchase amounts across customer segments. The boxplot shows that Consumer customers have both higher typical spending and greater variability in purchasing behaviour. Enterprise customers show a similar median purchase amount but a narrower spread, suggesting more consistent spending patterns within this segment. In contrast, SMB customers have a lower median purchase amount and a wider distribution, indicating greater variability and lower purchasing levels. These differences suggest that purchasing behaviour varies across customer segments and provide important context for evaluating marketing performance.</p>
+<p>The boxplot in <a href="#fig-boxplot" class="quarto-xref">Figure&nbsp;1</a> further illustrates the distribution of purchase amounts across customer segments. Consumer customers show both higher typical spending and greater variability in purchasing behaviour. Enterprise customers show a similar median purchase amount but a narrower spread, suggesting more consistent spending patterns within this segment. In contrast, SMB customers have a lower median purchase amount and a wider distribution, indicating greater variability and lower purchasing levels. These differences suggest that purchasing behaviour varies across customer segments and provide important context for evaluating marketing performance.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-boxplot" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -206,7 +202,7 @@ Figure&nbsp;2: Relationship Between Marketing Spend and Purchase Amount
 </div>
 </div>
 </div>
-<p><a href="#fig-spend" class="quarto-xref">Figure&nbsp;2</a> shows a strong positive relationship between marketing spend and purchase amount, indicating that customers who receive higher marketing investment tend to generate higher purchase values. The model explains approximately 74.1% of the variation in purchase amount, suggesting that marketing spending is an important factor influencing customer purchasing behaviour.</p>
+<p>The scatter plot in <a href="#fig-spend" class="quarto-xref">Figure&nbsp;2</a> shows a strong positive relationship between marketing spend and purchase amount, indicating that customers who receive higher marketing investment tend to generate higher purchase values. The regression model explains approximately 74.1% of the variation in purchase amount, demonstrating that marketing spending is a meaningful predictor of customer purchasing behaviour. This suggests that increasing marketing expenditure is associated with higher purchase amounts during the campaign period.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-visit" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -221,8 +217,8 @@ Figure&nbsp;3: Relationship Between Number of Visits and Purchase Amount
 </div>
 </div>
 </div>
-<p><a href="#fig-visit" class="quarto-xref">Figure&nbsp;3</a> shows that the number of visits is also positively related to purchase amount, meaning customers who visit more frequently tend to spend more. However, the relationship appears weaker, with the model explaining only about 20.6% of the variation in purchase amount. This suggests that while customer engagement contributes to purchasing behaviour, marketing spending plays a stronger role in driving purchase outcomes.</p>
-<p>Although the results indicate a meaningful relationship between marketing spend and purchase amount, the scatter in the data shows that purchase amounts can still vary at similar levels of marketing spending. Therefore, collecting more campaign data in future periods would help improve the reliability of the analysis and support more confident evaluation of marketing effectiveness.</p>
+<p>The relationship between customer engagement and purchasing behaviour is further illustrated in <a href="#fig-visit" class="quarto-xref">Figure&nbsp;3</a>. Customers who visit more frequently also tend to spend more, although the relationship appears weaker, with the model explaining approximately 20.6% of the variation in purchase amount. This indicates that while customer engagement contributes to purchasing behaviour, marketing spending plays a stronger role in influencing purchase outcomes.</p>
+<p>Overall, the analysis provides clear evidence that higher marketing expenditure per customer is associated with increased purchase amounts. However, the variability observed in the data suggests that marketing spending alone does not fully explain purchasing behaviour, and the current dataset size (150 customers) may be insufficient to capture the full range of customer responses. Collecting additional campaign data, including a larger number of customers and observations from future campaign periods, would help improve the reliability and applicability of the analysis. Furthermore, incorporating more detailed customer information, such as demographics, purchase history, and marketing channel preferences, would support more accurate modelling and more data-driven decision-making in marketing planning.</p>
 </section>
 
 </main>
